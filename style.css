@@ -8,8 +8,8 @@ body{
     background-color: #222;
 }
 .card{
-    width: 90%;
-    max-width: 470px;
+    width: 100%;
+    max-width: 500px;
     background: linear-gradient(135deg, #00feba, #5b548a);
     color: #fff;
     margin: 100px auto 0;
@@ -89,4 +89,28 @@ body{
     font-size: 14px;
     margin-top: 10px;
     display: none;
+}
+.farienheat button{
+    border-radius: 20px;    
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-top: 20px;
+    float: right;
+    border: #00feba;
+}
+.max,.mx{
+    display: flex;
+    float: left;
+    height: 20px;  
+    align-items: center;
+    padding: 10px;
+}
+.min,.mn{
+    display: flex;
+    float: right;  
+    align-items: center;
+    height: 20px; 
+    padding: 10px;
+    justify-content: space-between;
 }

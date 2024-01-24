@@ -15,10 +15,20 @@
         <div class="error">
             <p>Invalid city name</p>
         </div>
+
         <div class="weather">
+            <div class="farienheat">
+                <button type="button" class="btn" onclick="change()">°F</button>
+            </div>
             <img src="images/clear.png" class="weather-icon">
             <h1 class="temp">7°C</h1>
             <h2 class="city">Seoul</h2>
+            <h3 class="fl">Feels Like:</h3>
+            <h3 class="f">Feels Like:</h3>
+            <h4 class="mx">Highest: </h4>
+            <h4 class="max">High:</h4>
+            <h4 class="min">Low:</h4>
+            <h4 class="mn">Lowest: </h4>
             <div class="details">
                 <div class="col">
                     <img src="images/humidity.png">
@@ -46,6 +56,28 @@
     const searchBox = document.querySelector(".search input");
     const searchBtn = document.querySelector(".search button");
     const weatherIcon = document.querySelector(".weather-icon");
+    const h = document.querySelector(".temp").textContent;
+    var temp = 0;
+    var feels_like=0;
+    var mx = 0;
+    var mn = 0;
+    const b = document.getElementById(".btn");
+    function change() {
+        if (document.querySelector(".temp").textContent.includes("°F")) {
+            document.querySelector(".temp").innerHTML = Math.round(temp) + "°C";
+            document.querySelector(".f").innerHTML = Math.round(feels_like) + "°C";
+            document.querySelector(".max").innerHTML = Math.round(mx) + "°C";
+            document.querySelector(".min").innerHTML = Math.round(mn) + "°C";
+            document.querySelector(".btn").innerHTML = "°F";
+        }
+        else {
+            document.querySelector(".btn").innerHTML = "°C";
+            document.querySelector(".temp").innerHTML = Math.round((temp * 9 / 5) + 32) + "°F";
+            document.querySelector(".f").innerHTML = Math.round((feels_like * 9 / 5) + 32) + "°F";
+            document.querySelector(".max").innerHTML = Math.round((mx * 9 / 5) + 32) + "°F";
+            document.querySelector(".min").innerHTML = Math.round((mn * 9 / 5) + 32) + "°F";
+        }
+    }
 
     async function checkWeather(city) {
         const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
@@ -56,8 +88,16 @@
         }
         else {
             var data = await response.json();
+            console.log(data);
             document.querySelector(".city").innerHTML = data.name;
             document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
+            document.querySelector(".max").innerHTML = Math.round(data.main.temp_max) + "°C";
+            document.querySelector(".min").innerHTML = Math.round(data.main.temp_min) + "°C";
+            document.querySelector(".f").innerHTML = Math.round(data.main.feels_like) + "°C";
+            temp = Math.round(data.main.temp);
+            feels_like = Math.round(data.main.feels_like);
+            mn=Math.round(data.main.temp_min);
+            mx =Math.round(data.main.temp_max);
             document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
             document.querySelector(".wind").innerHTML = data.wind.speed + " kmph";
 
@@ -87,7 +127,6 @@
     searchBtn.addEventListener("click", () => {
         checkWeather(searchBox.value);
     })
-
 </script>
 
 </html>
